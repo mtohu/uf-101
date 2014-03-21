@@ -1,0 +1,5 @@
+*.dbg
+*.DBG
+*.swp
+*.swo
+/application/cache
