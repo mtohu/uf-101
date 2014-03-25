@@ -37,11 +37,21 @@ class Bootstrap extends Yaf_Bootstrap_Abstract{
                                   "controller" => "maindex",
                                   "action"     => "list",))
                 );*/ 
+                /*$router->addRoute('rewrite', new Yaf_Route_Rewrite("/admin/categorylist/:cid",array(
+                                  "controller" => "admin",
+                                  "action"     => "categorylist",))
+                );*/
                 $router->addRoute('regex', new Yaf_Route_Regex("#^/list/([0-9]+)/([^/]*)#",
                                   array("controller" => "maindex","action" => "list"),
                                   array(1=>"id",2=>"name"))
                 ); 
 	}
+
+        public function _initSession(Yaf_Dispatcher $dispatcher) 
+        { 
+                $session = new Session(); 
+                Yaf_Registry::set("session",$session);
+        } 
 	
 	public function _initView(Yaf_Dispatcher $dispatcher){
 		//在这里注册自己的view控制器，例如smarty,firekylin
