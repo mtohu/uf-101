@@ -48,4 +48,20 @@ class IndexModel extends ModelbaseModel{
         return $lists;
     }
 
+    public function getUserFormOne($uid = 0){
+        if(!$uid)
+            return false;
+
+        $sql = sprintf("SELECT u.username,u.email,u.status,u.grade,a.adminname,a.status AS astatus 
+                        FROM users AS u LEFT JOIN admin AS a ON u.id = a.userid WHERE u.id = %d LIMIT 1"
+                        ,$uid);
+
+        $query = $this->db->query($sql);
+        if($this->db->num_rows($query) < 1 )
+            return false;
+
+        $row   = $this->db->fetch_array($query);
+        return $row;
+    }
+
 }

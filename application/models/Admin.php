@@ -30,6 +30,21 @@ class AdminModel extends ModelbaseModel{
         return $row;
     }
 
+    public function getAdminByadminnameAndPasswd($adminname='',$passwd=''){
+        if(!$adminname || !$passwd)
+            return false;
+
+        $sql = sprintf("SELECT * FROM admin WHERE adminname = '%s' AND passwd = '%s' LIMIT 1"
+                        ,mysql_real_escape_string($adminname),mysql_real_escape_string($passwd));
+        $query = $this->db->query($sql);
+        if($this->db->num_rows($query) < 1 )
+            return false;
+
+        $row   = $this->db->fetch_array($query);
+        return $row;
+        
+    }
+
     public function updateAdmin($id = 0,$ar = array()){
         if(!$id || !$ar)
             return false;
@@ -45,6 +60,7 @@ class AdminModel extends ModelbaseModel{
         }
         $sql = sprintf("UPDATE admin SET %s WHERE id = %d LIMIT 1",$set);
         $this->db->query($sql);
+        return true;
 
     }
 

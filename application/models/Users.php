@@ -43,7 +43,7 @@ class UsersModel extends ModelbaseModel{
                 $set .= ",{$k}='".$v."'";
             $n++;
         }
-        $sql = sprintf("UPDATE users SET %s WHERE id = %d LIMIT 1",$set);
+        $sql = sprintf("UPDATE users SET %s WHERE id = %d LIMIT 1",$set,$id);
         $this->db->query($sql);
 
     }
