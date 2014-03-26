@@ -5,6 +5,7 @@ class WebbaseController extends Yaf_Controller_Abstract{
   protected $_pageProg = null;
   protected $_pageMethod = null;
   public $indexModel = null;
+  public $page = null;
   public $_keyarr = null;
   public $basecommon = null;
   public $session = null;
@@ -13,6 +14,7 @@ class WebbaseController extends Yaf_Controller_Abstract{
       $this->session = Yaf_Registry::get("session");
       $this->basecommon = new Basecommon();
       $this->indexModel = new IndexModel();
+      $this->page = new Page();
       $this->_keyarr = $this->basecommon->getDomainBykeyAndFolder();
       $ckey=$this->_keyarr['ckey'];$uckey=$this->_keyarr['uckey'];
       $userinfo = null;

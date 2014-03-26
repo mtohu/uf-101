@@ -29,7 +29,7 @@
      <select name="selparend">
      <option value="0">请选择</option>
       <!--{foreach from=$lists item=row}-->
-     <option value ="<!--{$row.id}-->"><!--{$row.zhname}--></option>
+     <option value ="<!--{$row.id}-->" <!--{if $categoryone.fid == $row.id}-->selected="selected"<!--{/if}-->><!--{$row.zhname}--></option>
      <!--{/foreach}-->
      </select>
     </td>

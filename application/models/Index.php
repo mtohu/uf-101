@@ -52,7 +52,7 @@ class IndexModel extends ModelbaseModel{
         if(!$uid)
             return false;
 
-        $sql = sprintf("SELECT u.username,u.email,u.status,u.grade,a.adminname,a.status AS astatus 
+        $sql = sprintf("SELECT u.id,u.username,u.email,u.status,u.grade,a.id AS adminid, a.adminname,a.status AS astatus 
                         FROM users AS u LEFT JOIN admin AS a ON u.id = a.userid WHERE u.id = %d LIMIT 1"
                         ,$uid);
 

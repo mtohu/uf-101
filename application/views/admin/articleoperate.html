@@ -1,0 +1,110 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>管理界面</title>
+<link href="/css/admin/style.css" rel="stylesheet" type="text/css" />
+<link rel="stylesheet" href="/editor/themes/default/default.css" type="text/css"/>
+<script charset="utf-8" type="text/javascript" src="/editor/kindeditor.js"></script> 
+<script charset="utf-8" type="text/javascript" src="/editor/lang/zh_CN.js"></script> 
+<script charset="utf-8" type="text/javascript" src="/editor/lang/zh_TW.js"></script> 
+<script charset="utf-8" type="text/javascript" src="/editor/lang/en.js"></script> 
+</head>
+<body id="page">
+<h2><!--{if $aid > 0}-->编辑文章<!--{else}-->添加文章<!--{/if}--></h2>
+<form action="/admin/articleoperate" enctype="multipart/form-data" method="post" name="articleForm" id="articleForm">
+<input type="hidden" name="aid" value="<!--{$aid}-->">
+<input type="hidden" name="en_acid" value="<!--{$articleone.en_acid}-->">
+<input type="hidden" name="zh_acid" value="<!--{$articleone.zh_acid}-->">
+<input type="hidden" name="tw_acid" value="<!--{$articleone.tw_acid}-->">
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+  <tr>
+    <th>LINK：</th>
+    <td><input type="text" name="link" id="link" value="<!--{$articleone.link}-->" /></td>
+  </tr>
+  <tr>
+     <th>分类：</th>
+     <td>
+     <select name="selcate">
+     <option value="0">请选择</option>
+      <!--{foreach from=$lists item=row}-->
+     <option value ="<!--{$row.id}-->" <!--{if $articleone.cateid == $row.id}-->selected="selected"<!--{/if}-->><!--{$row.zhname}--></option>
+     <!--{/foreach}-->
+     </select>
+    </td>
+  </tr>
+  <tr>
+    <th>英文标题：</th>
+    <td><input type="text" name="entitle" id="entitle" value="<!--{$articleone.entitle}-->" /></td>
+  </tr>
+  <tr>
+    <th>简体标题：</th>
+    <td><input type="text" name="zhtitle" id="zhtitle" value="<!--{$articleone.zhtitle}-->" /></td>
+  </tr>
+  <tr>
+    <th>繁体标题：</th>
+    <td><input type="text" name="twtitle" id="twtitle" value="<!--{$articleone.twtitle}-->"/></td>
+  </tr>
+  <tr>
+    <th>英文内容：</th>
+    <td><textarea name="endes" id="endes" style="width:500px;height:60px;"><!--{$articleone.endes}--></textarea></td>
+  </tr>
+  <tr>
+    <th>简体内容：</th>
+    <td><textarea name="zhdes" id="zhdes" style="width:500px;height:60px;"><!--{$articleone.zhdes}--></textarea></td>
+  </tr>
+  <tr>
+    <th>繁体内容：</th>
+    <td><textarea name="twdes" id="twdes" style="width:500px;height:60px;"><!--{$articleone.twdes}--></textarea></td>
+  </tr>
+  <tr>
+    <th>英文简介：</th>
+    <td><textarea name="ensummary" id="ensummary" style="width:500px;height:60px;"><!--{$articleone.ensummary}--></textarea></td>
+  </tr>
+  <tr>
+    <th>简体简介：</th>
+    <td><textarea name="zhsummary" id="zhsummary" style="width:500px;height:60px;"><!--{$articleone.zhsummary}--></textarea></td>
+  </tr>
+  <tr>
+    <th>繁体简介：</th>
+    <td><textarea name="twsummary" id="twsummary" style="width:500px;height:60px;"><!--{$articleone.twsummary}--></textarea></td>
+  </tr>
+  <tr>
+    <th>是否推荐：</th>
+    <td><input type="radio" name="isrec" value="1" <!--{if $articleone.isrec == 1}-->checked="true"<!--{/if}--> />是
+    <input type="radio" name="isrec" value="0" <!--{if $articleone.isrec == 0}-->checked="true"<!--{/if}--> />否</td>
+  </tr>
+  <tr>
+    <th>是否置顶：</th>
+    <td><input type="radio" name="istop" value="1" <!--{if $articleone.istop == 1}-->checked="true"<!--{/if}--> />是
+    <input type="radio" name="istop" value="0" <!--{if $articleone.istop == 0}-->checked="true"<!--{/if}--> />否</td>
+  </tr>
+  <tr>
+    <th>状态：</th>
+    <td><input type="radio" name="closed" value="1" <!--{if $articleone.closed == 1}-->checked="true"<!--{/if}--> />开启
+    <input type="radio" name="closed" value="0" <!--{if $articleone.closed == 0}-->checked="true"<!--{/if}--> />关闭</td>
+  </tr>
+  <tr>
+    <th>&nbsp;</th>
+    <td><input name="bthsub" type="button" onclick="savedata();" class="bt" value="提交" /></td>
+  </tr>
+</table>
+</form>
+<script type="text/javascript">
+var editor1,editor2,editor3;
+KindEditor.ready(function(K){
+   editor1 = K.create('#endes', {langType : 'en'});
+   editor2 = K.create('#zhdes', {langType : 'zh_CN'});
+   editor3 = K.create('#twdes', {langType : 'zh_TW'});
+});
+function savedata(){
+   editor1.sync();
+   editor2.sync();
+   editor3.sync();
+   document.articleForm.method='post';   
+   document.articleForm.action='/admin/articleoperate';   
+   document.articleForm.submit(); 
+}
+</script>
+</body>
+</html>
