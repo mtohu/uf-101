@@ -5,7 +5,7 @@ class ArticlesModel extends ModelbaseModel{
         parent::__construct();
     }   
     
-    public function getArticlesList($lang='zh',$wsql="",$closed=1,$nowpage=1,$limit = 30,$order="a.ctime DESC") {
+    public function getArticlesList($lang='zh',$wsql="",$closed=0,$nowpage=1,$limit = 30,$order="a.ctime DESC") {
         $form = ($nowpage-1) * $limit;
         $form = $form < 0 ? 0 : $form;
 
@@ -31,6 +31,24 @@ class ArticlesModel extends ModelbaseModel{
         $lists = $this->db->fetch_all($sql);
 
         return $lists;
+    }
+
+    public function getArticlesCount($lang='zh',$wsql="",$closed=0) {
+
+        $wheresql = ' a.closed IN (0,1)';
+        if($closed >=0)
+            $wheresql = ' a.closed='.$closed;
+
+        if($wsql)
+            $wheresql .= $wsql;
+
+        $sql = sprintf(" SELECT count(a.id) AS num FROM articles AS a  WHERE  %s ",$wheresql);
+        $query = $this->db->query($sql);
+        if($this->db->num_rows($query) < 1 )
+            return false;
+
+        $row = $this->db->fetch_array($query);
+        return $row["num"];
     }
 
     public function getArticlesJoinContentOne($lang='zh',$aid = 0){
@@ -184,7 +202,7 @@ class ArticlesModel extends ModelbaseModel{
 
     }
 
-    public function delArticle($aid = 0){
+    public function delArticle($aid = 0,$cateid = 0){
         if(!$aid)
             return false;
 
@@ -213,6 +231,9 @@ class ArticlesModel extends ModelbaseModel{
         $this->db->query($sql);
         $sql = sprintf(" DELETE FROM articles_contents9 WHERE aid IN (%s) LIMIT 4",$aid);
         $this->db->query($sql);
-
+        if($cateid){
+            $sql = sprintf(" UPDATE category SET total=total-1 WHERE id IN (%s) LIMIT 1",$cateid);
+            $this->db->query($sql);
+        }
     }
 }

@@ -18,9 +18,24 @@ class AdminController extends WebbaseController {
 
     public function articlelistAction($cid=0,$title="",$page=0){
         $page=intval($page)>0?intval($page):1;
+        $title = urldecode($title);
+        if(!$title){
+            $title = "";
+        }
         $articleModel = new ArticlesModel();
-        $lists = $articleModel->getArticlesList("zh","",-1,$page,15);
-        $PAGESTR = $this->page->getPaginationString($page, 50, 15, 1, "/", "/admin/articlelist/cid/$cid/title/$title/page/");
+        /*$channellist = $this->viewData["channellist"];
+        $ctotal = 0;
+        foreach($channellist as $k => $v){
+            $ctotal = $ctotal + $v["total"]; 
+        }*/
+        $where = " AND (a.entitle LIKE '%".$title."%' OR a.zhtitle LIKE '%".$title."%')";
+        $ctotal=$articleModel->getArticlesCount("zh",$where,-1);
+        $lists = null;
+        if($ctotal){
+            $lists = $articleModel->getArticlesList("zh",$where,-1,$page,15);
+            $PAGESTR = $this->page->getPaginationString($page,$ctotal, 15, 1, "/", "admin/articlelist/cid/$cid/title/$title/page/");
+            $this->_setViewData(array('PAGESTR'=>$PAGESTR));
+        }
         $this->_setViewData(array('lists'=>$lists,"cid"=>$cid));
         $this->getView()->assign($this->viewData);
 
@@ -29,9 +44,13 @@ class AdminController extends WebbaseController {
     public function articleoperateAction($aid = 0,$d = 0){
         $articleModel = new ArticlesModel();
         if($d){
-            $flag=$articleModel->delArticle($aid);
+            $articleone = $articleModel->getArticleOne($aid);
+            if($articleone){
+                $flag=$articleModel->delArticle($aid,$articleone["cateid"]);
+            }
             if($flag){
-                die(json_encode(array('status'=>0)));
+                echo "<script>window.history.back();</script>";exit;
+                //die(json_encode(array('status'=>0)));
                 return TRUE;
             }
         }
@@ -70,6 +89,10 @@ class AdminController extends WebbaseController {
                 $flag=$articleModel->updateArticlesContents($en_acid,$aid,$car1);
                 $flag=$articleModel->updateArticlesContents($zh_acid,$aid,$car2);
                 $flag=$articleModel->updateArticlesContents($tw_acid,$aid,$car3);
+                if(!$flag){
+                    die("失败");
+                }            
+                echo "<script>window.history.go(-2);</script>";exit;
             }else{
                 $strar["ctime"]=time();
                 $strar["adminid"]=$this->_userInfo["adminid"];

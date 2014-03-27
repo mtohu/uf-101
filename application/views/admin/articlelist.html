@@ -9,6 +9,10 @@
 </head>
 <body id="page">
 <h2>文章列表&nbsp;&nbsp;</h2>
+<h2>
+<p>文章标题:<input type="text" name="title" id="title" value=""/>
+<input type="button" onclick="searchdata();" value="搜寻" /></p>
+</h2>
 <table width="100%" border="0" cellspacing="0" cellpadding="0">
   <tr>
     <td>ID号</td>
@@ -39,17 +43,28 @@
     <td><!--{$row.zh_acid}--></td>
     <td><!--{$row.tw_acid}--></td>
     <td><!--{$row.thumb}--></td>
-    <td><strong style="color:red;"><!--{if $row.isrec == 1}-->否<!--{else}-->是<!--{/if}--></strong></td>
-    <td><strong style="color:red;"><!--{if $row.istop == 1}-->否<!--{else}-->是<!--{/if}--></strong></td>
+    <td><strong style="color:red;"><!--{if $row.isrec == 0}-->否<!--{else}-->是<!--{/if}--></strong></td>
+    <td><strong style="color:red;"><!--{if $row.istop == 0}-->否<!--{else}-->是<!--{/if}--></strong></td>
     <td><strong style="color:red;"><!--{if $row.closed == 1}-->关闭<!--{else}-->开启<!--{/if}--></strong></td>
     <td><!--{$row.adminname}--></td>
     <td><!--{$row.ctime|date_format:"%Y-%m-%d"}--></td>
     <td><a href="javascript:void(0);">查看</a>|
         <a href="/admin/articleoperate/aid/<!--{$row.id}-->">编辑</a>|
-        <a href="javascript:vodi(0);">删除</a></td>
+        <a href="/admin/articleoperate/aid/<!--{$row.id}-->/d/1">删除</a></td>
   </tr>
   <!--{/if}-->
   <!--{/foreach}-->
 </table>
+<!--{$PAGESTR}-->
+<script>
+function searchdata(){
+  var title = jQuery("#title").val();
+  if(!jQuery.trim(title)){
+      title = "0";
+  }
+  title = encodeURIComponent(title);
+  window.location.href="/admin/articlelist/cid/0/title/"+title+"/page/1";
+}
+</script>
 </body>
 </html>
