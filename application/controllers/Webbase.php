@@ -10,6 +10,7 @@ class WebbaseController extends Yaf_Controller_Abstract{
   public $basecommon = null;
   public $session = null;
 
+  public $_langset = "zh";
   public $multicache = null;
   public $memSets = null;
   public $_restetMemCached = false;
@@ -17,6 +18,7 @@ class WebbaseController extends Yaf_Controller_Abstract{
   public $_modelArrayPicks = array();
   public $viewData  = array();
   public function init(){
+      $cdnurl = Yaf_Registry::get("config")->get("cdnurl");
       $this->session = Yaf_Registry::get("session");
       $this->basecommon = new Basecommon();
       $this->indexModel = new IndexModel();
@@ -39,9 +41,13 @@ class WebbaseController extends Yaf_Controller_Abstract{
           $this->_userInfo = $userInfo = $this->session->userdata('userInfo');
       }
 
-      $this->_modelArrayPicks = array('hotarticles'=>4);
+      $this->_setViewData(array('cdnurl'=>$cdnurl,'pageMethod'=>$this->_pageMethod,'pageProg'=>$this->_pageProg,'exectime'=>time()));
+
+      $this->_modelArrayPicks = array('hotarticles'=>10);
       $this->memSets = array(
                        "maindex"=>array("hotarticles","channellist"),
+                       "articles"=>array("hotarticles"),
+                       "list"=>array("hotarticles","channellist"),
                        "admin"=>array("channellist")
       );
 
@@ -79,7 +85,7 @@ class WebbaseController extends Yaf_Controller_Abstract{
             $data = $this->$modelKey->getChannelList();
             break;
           case 'hotarticles':
-            $data = $this->$modelKey->getArticlesList('zh',"",0,1,4,"a.istop DESC,a.isrec DESC,a.ctime DESC");
+            $data = $this->$modelKey->getArticlesList('zh',"",0,1,10,"a.istop DESC,a.isrec DESC,a.ctime DESC");
             break;
         }
         $this->multicache->set($key, $data, MEMCACHE_COMPRESSED, 77);

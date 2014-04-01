@@ -76,13 +76,13 @@ class Page {
     //previous 10 page
 
     if ($prevTenPage)
-      $pagination .= "<a href=\"$targetpage$pagestring$prevTenPage\" title='上十頁'>&#171;&#171; </a>";
+      $pagination .= "<a href=\"$targetpage$pagestring$prevTenPage\" title='Previous'>&#171;&#171; </a>";
 //    else
 //      $pagination .= "<span class=\"disabled\">&#171;&#171; </span>";
     
     //previous button
     if ($prev)
-      $pagination .= "<a href=\"$targetpage$pagestring$prev\" title='上一頁'>&#171; </a>";
+      $pagination .= "<a href=\"$targetpage$pagestring$prev\" title='Previous'>&#171; </a>";
     else
       $pagination .= "<span class=\"disabled\">&#171; </span>";
      
@@ -115,12 +115,12 @@ class Page {
       $pagination .= "<span class=\"disabled\">$lastpage</span>";
 
     if ($next)  
-      $pagination .= "<a href=\"$targetpage$pagestring$next\" title='下一頁'> &#187;</a>";
+      $pagination .= "<a href=\"$targetpage$pagestring$next\" title='next'> &#187;</a>";
     else    
       $pagination .= "<span class=\"disabled\"> &#187;</span>";
 
     if ($nextTenPage)  
-      $pagination .= "<a href=\"$targetpage$pagestring$nextTenPage\" title='下十頁'> &#187;&#187;</a>";
+      $pagination .= "<a href=\"$targetpage$pagestring$nextTenPage\" title='next'> &#187;&#187;</a>";
 //    else    
 //      $pagination .= "<span class=\"disabled\"> &#187;&#187;</span>";
 

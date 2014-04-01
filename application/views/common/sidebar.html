@@ -1,0 +1,42 @@
+<aside class="sidebar">
+<div id="sidebars">
+<div class="sidebar">
+<ul class="sidebar_list">
+<li class="widget">
+</li>
+<li id="widget_recent_entries" class="widget widget-sidebar">
+<h3>Must See Stories</h3>
+<ul class="advanced-recent-posts">
+<!--{foreach from=$hotarticles item=row}-->
+<!--{if $row.id > 0}-->
+<!--{if $langset == 'zh'}-->
+<li>
+<a href="/articles/<!--{$row.id}-->-<!--{$row.link}-->-<!--{$langset}-->/" title="<!--{$row.zhtitle}-->" >
+<img src="http://cdn.viralnova.com/wp-content/uploads/2014/03/modern-day-noah-300x157.jpg" class="wp-post-image">
+</a>
+<a title="<!--{$row.zhtitle}-->" href="/articles/<!--{$row.id}-->-<!--{$row.link}-->-<!--{$langset}-->/"><!--{$row.zhtitle}--></a>
+</li>
+<!--{else if $langset == 'en'}-->
+<li>
+<a href="/articles/<!--{$row.id}-->-<!--{$row.link}-->-<!--{$langset}-->/" title="<!--{$row.entitle}-->" > <img src="http://cdn.viralnova.com/wp-content/uploads/2014/03/modern-day-noah-300x157.jpg" class="wp-post-image">
+</a>
+<a title="<!--{$row.entitle}-->" href="/articles/<!--{$row.id}-->-<!--{$row.link}-->-<!--{$langset}-->/"><!--{$row.entitle}--></a>
+</li>
+<!--{else if $langset == 'tw'}-->
+<li>
+<a href="/articles/<!--{$row.id}-->-<!--{$row.link}-->-<!--{$langset}-->/" title="<!--{$row.twtitle}-->" > <img src="http://cdn.viralnova.com/wp-content/uploads/2014/03/modern-day-noah-300x157.jpg" class="wp-post-image">
+</a>
+<a title="<!--{$row.twtitle}-->" href="/articles/<!--{$row.id}-->-<!--{$row.link}-->-<!--{$langset}-->/"><!--{$row.twtitle}--></a>
+</li>
+<!--{/if}-->
+<!--{/if}-->
+<!--{/foreach}-->
+</ul>
+</li>
+<li id="facebook_like" class="widget widget-sidebar">
+<h3>Hey, Join Us On Facebook!</h3>
+</li>
+</ul>
+</div>
+</div><!--sidebars-->
+</aside>

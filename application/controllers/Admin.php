@@ -203,6 +203,116 @@ class AdminController extends WebbaseController {
         
     }
 
+    public function articleuploadAction($aid = 0,$id= 0,$d = 0){
+        $articleModel = new ArticlesModel();
+        $articlesattachModel=new ArticlesattachModel();
+        if($d){
+            if(!$id)
+                return false;
+
+            $row=$articlesattachModel->getArticlesAttachone($id);
+            if($row)
+                @unlink(APPLICATION_PATH."/".$row["filedir"]."/".$row["filename"].".".$row["type"]);
+            
+            $flag=$articlesattachModel->delArticleAttach($id);            
+            if($flag){
+                $this->redirect("/admin/articleupload/aid/".$aid);
+                return TRUE;
+            }
+        }
+        if($this->getRequest()->isPost()){
+            $aid = $this->getRequest()->getPost("aid");
+            if(!$aid)
+                return false;
+
+            $sizename = $this->getRequest()->getPost("sizename");
+            $handle = new Upload($_FILES['fileupload']);
+            if($handle->uploaded){
+            $handle->mime_check = true;
+            $handle->file_overwrite=true;
+            $handle->allowed = array('image/*');
+            $filename = $aid;
+            $ofilename = $filename;
+            $sizear = null;
+            if($sizename){
+                $sizear = explode("X",$sizename);
+                if(!isset($sizear[1])){
+                    echo "<script>alert('尺寸输入错误');</script>";
+                    $this->redirect("/admin/articleupload/aid/".$aid);
+                    return TRUE;
+                }
+                $filename .="-".$sizename;
+            }else{
+                $filename =date("YmdHis")."-".$aid."-".rand(10000, 99999);
+            }
+            if($handle->file_is_image){ 
+                echo "<script>alert('不是图片');</script>";
+                $this->redirect("/admin/articleupload/aid/".$aid);
+                return TRUE;
+            }
+            $handle->file_new_name_body =$filename;
+            //if(isset($sizear)){
+                //$handle->image_resize=true;
+                //$handle->image_ratio= true;
+                //$handle->image_ratio_crop= true;
+                //$handle->image_x=intval($sizear[0]);
+                //$handle->image_y =intval($sizear[1]);
+            //}
+            $ymd = date("Ymd");
+            $uploaddir ="data/uploadfile/image/".$ymd."/".$aid;
+            $handle->rmkdir(APPLICATION_PATH."/".$uploaddir);
+            $handle->process(APPLICATION_PATH."/".$uploaddir."/");
+            if($handle->processed){
+                $asetar = array(
+                    "picdir"=>$uploaddir,
+                    "picname"=>$ofilename,
+                    "ext"=>$handle->file_dst_name_ext
+                );
+                $newfilesize =getimagesize($handle->file_dst_pathname);
+                $aasetar = array(
+                    "aid"=>$aid,
+                    "filedir"=>$uploaddir,
+                    "filename"=>$handle->file_dst_name_body,
+                    "type"=>$handle->file_dst_name_ext,
+                    "sizename"=>$newfilesize[0]."X".$newfilesize[1],
+                    "filesize"=>$handle->file_src_size,
+                    "ctime"=>time()
+                );
+                if(isset($sizear)){
+                    $imginput = new Imageinput();
+                    $meta=$imginput->img_cop($handle->file_dst_pathname,$handle->file_dst_name,$sizear);
+                    if($meta){
+                        $aasetar["filesize"]=$meta["size"];
+                        $aasetar["sizename"]=$meta["w"]."X".$meta["h"];
+                    }
+                }
+                $flag=$articlesattachModel->addArticlesAttach($aasetar);
+                if($flag){
+                    $asetar["thumb"]=1;
+                    $flag=$articleModel->updateArticles($aid,$asetar);
+                }
+                $handle->clean();
+                if($flag){
+                    echo "<script>alert('上传成功');</script>";
+                    $this->redirect("/admin/articleupload/aid/".$aid);
+                    return TRUE;
+                }
+            }else{
+                echo "<script>alert('".$handle->error."');</script>";
+                $this->redirect("/admin/articleupload/aid/".$aid);
+                return TRUE;
+            }
+            }
+        }else{
+            if(!$aid)
+                return false;
+
+            $lists=$articlesattachModel->getArticlesAttachByaid($aid,1,10);
+            $this->_setViewData(array("lists"=>$lists,"aid"=>$aid));
+            $this->getView()->assign($this->viewData);
+        }
+    }
+
     public function loginAction() {
         if($this->getRequest()->isPost()){
             $username = $this->getRequest()->getPost("username");

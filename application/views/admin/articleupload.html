@@ -1,0 +1,54 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>管理界面</title>
+<link href="/css/admin/style.css" rel="stylesheet" type="text/css" />
+</head>
+<body id="page">
+<h2>上传图片  <a href="javascript:window.history.back();">[返回]</a></h2>
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td>ID号</td>
+<td>目录</td>
+<td>名称</td>
+<td>类型</td>
+<td>大小</td>
+<td>serverid</td>
+<td>创建时间</td>
+<td>操作</td>
+</tr>
+<!--{foreach from=$lists item=row}-->
+<!--{if $row.id > 0}-->
+<tr>
+<td><!--{$row.id}--></td>
+<td><!--{$row.filedir}--></td>
+<td><!--{$row.filename}--></td>
+<td><!--{$row.type}--></td>
+<td><!--{$row.filesize}--></td>
+<td><!--{$row.serverid}--></td>
+<td><!--{$row.ctime|date_format:"%Y-%m-%d"}--></td>
+<td><a href="/admin/articleupload/aid/<!--{$aid}-->/id/<!--{$row.id}-->/d/1">删除</a></td></td>
+</tr>
+<!--{/if}-->
+<!--{/foreach}-->
+</table>
+<form action="/admin/articleupload" method="post" enctype="multipart/form-data" id="uploadForm">
+<input type="hidden" name="aid" value="<!--{$aid}-->">
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+  <tr>
+    <th>上传图片：</th>
+    <td><input type="file" name="fileupload" id="fileupload" /></td>
+  </tr>
+  <tr>
+    <th>尺寸名：</th>
+    <td><input type="text" name="sizename" />300X200</td>
+  </tr>
+  <tr>
+    <th>&nbsp;</th>
+    <td><input name="btnsub" type="submit" class="bt" value="确定" /></td>
+  </tr>
+</table>
+</form>
+</body>
+</html>
