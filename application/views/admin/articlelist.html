@@ -48,7 +48,7 @@
     <td><strong style="color:red;"><!--{if $row.closed == 1}-->关闭<!--{else}-->开启<!--{/if}--></strong></td>
     <td><!--{$row.adminname}--></td>
     <td><!--{$row.ctime|date_format:"%Y-%m-%d"}--></td>
-    <td><a href="javascript:void(0);">查看</a>|
+    <td><a target="_blank" href="/articles/<!--{$row.id}-->-<!--{$row.link}-->-zh/">查看</a>|
         <a href="/admin/articleoperate/aid/<!--{$row.id}-->">编辑</a>|
         <a href="/admin/articleupload/aid/<!--{$row.id}-->">上传</a>|
         <a href="/admin/articleoperate/aid/<!--{$row.id}-->/d/1">删除</a></td>

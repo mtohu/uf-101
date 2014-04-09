@@ -4,6 +4,14 @@ class ListController extends WebbaseController {
        
     public function init(){
         parent::init();
+        $website = $this->viewData["website"];
+        if(isset($website)){
+            $website=$website[0];
+            $website["title"]=$website[$this->_langset."title"];
+            $website["keyword"]=$website[$this->_langset."keyword"];
+            $website["description"]=$website[$this->_langset."description"];
+            $this->_setViewData(array('website'=>$website));
+        }
     }
     public function indexAction($catename = "",$page = 0) {
         $page = intval($page)>0?intval($page):1;

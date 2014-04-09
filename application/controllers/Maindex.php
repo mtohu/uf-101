@@ -4,6 +4,14 @@ class MaindexController extends WebbaseController {
        
     public function init(){
         parent::init();
+        $website = $this->viewData["website"];
+        if(isset($website)){
+            $website=$website[0];
+            $website["title"]=$website[$this->_langset."title"];
+            $website["keyword"]=$website[$this->_langset."keyword"];
+            $website["description"]=$website[$this->_langset."description"];
+            $this->_setViewData(array('website'=>$website));
+        }
     }
 
     public function indexAction($page = 0) {

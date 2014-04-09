@@ -77,9 +77,12 @@ class AdminController extends WebbaseController {
                 $strar["zhcatename"]=$caterow["zhname"];
                 $strar["twcatename"]=$caterow["twname"];
             }
-            $car1 = array("des"=>mysql_real_escape_string(htmlspecialchars($this->getRequest()->getPost("endes"))));
-            $car2 = array("des"=>mysql_real_escape_string(htmlspecialchars($this->getRequest()->getPost("zhdes"))));
-            $car3 = array("des"=>mysql_real_escape_string(htmlspecialchars($this->getRequest()->getPost("twdes"))));
+            $car1 = array("des"=>mysql_real_escape_string(htmlspecialchars($this->getRequest()->getPost("endes"))),
+                          "keyword"=>mysql_real_escape_string($this->getRequest()->getPost("enkeyword")));
+            $car2 = array("des"=>mysql_real_escape_string(htmlspecialchars($this->getRequest()->getPost("zhdes"))),
+                          "keyword"=>mysql_real_escape_string($this->getRequest()->getPost("zhkeyword")));
+            $car3 = array("des"=>mysql_real_escape_string(htmlspecialchars($this->getRequest()->getPost("twdes"))),
+                          "keyword"=>mysql_real_escape_string($this->getRequest()->getPost("twkeyword")));
             $flag=0;
             if(intval($aid)>0){
                 $en_acid = $this->getRequest()->getPost("en_acid");
@@ -126,12 +129,18 @@ class AdminController extends WebbaseController {
                     $acontents = $articleModel->getArticleContents($aid);
                     if($acontents){
                         foreach($acontents as $k => $v){
-                            if($v["id"] == $articleone["en_acid"])
+                            if($v["id"] == $articleone["en_acid"]){
                                 $articleone["endes"]= $v["des"];
-                            elseif($v["id"] == $articleone["zh_acid"])
+                                $articleone["enkeyword"]= $v["keyword"];
+                            }
+                            elseif($v["id"] == $articleone["zh_acid"]){
                                 $articleone["zhdes"]= $v["des"];
-                            elseif($v["id"] == $articleone["tw_acid"])
+                                $articleone["zhkeyword"]= $v["keyword"];
+                            }
+                            elseif($v["id"] == $articleone["tw_acid"]){
                                 $articleone["twdes"]= $v["des"];
+                                $articleone["twkeyword"]= $v["keyword"];
+                            }
                         }
                     }
                 }
@@ -199,8 +208,52 @@ class AdminController extends WebbaseController {
          
     }
 
-    public function siteinfoAction(){
-        
+    public function siteinfoAction($id=0,$d=0){
+        $websiteModel = new WebsiteModel();
+        if($d){
+            if(!$id)
+                return false;
+
+            $flag=$websiteModel->delWebsite($id);
+            if($flag){
+                $this->redirect("/admin/siteinfo/id/".$id);
+                return TRUE;
+            }
+        }
+        if($this->getRequest()->isPost()){
+            $id = $this->getRequest()->getPost("id");
+            $entitle = $this->getRequest()->getPost("entitle");
+            $zhtitle = $this->getRequest()->getPost("zhtitle");
+            $twtitle = $this->getRequest()->getPost("twtitle");
+            $enkeyword = $this->getRequest()->getPost("enkeyword");
+            $zhkeyword = $this->getRequest()->getPost("zhkeyword");
+            $twkeyword = $this->getRequest()->getPost("twkeyword");
+            $endes = $this->getRequest()->getPost("endescription");
+            $zhdes = $this->getRequest()->getPost("zhdescription");
+            $twdes = $this->getRequest()->getPost("twdescription");
+            $strar=array("entitle"=>mysql_real_escape_string($entitle),"zhtitle"=>mysql_real_escape_string($zhtitle),
+                         "twtitle"=>mysql_real_escape_string($twtitle),"enkeyword"=>mysql_real_escape_string($enkeyword),
+                         "zhkeyword"=>mysql_real_escape_string($zhkeyword),"twkeyword"=>mysql_real_escape_string($twkeyword),
+                         "endescription"=>mysql_real_escape_string($endes),"zhdescription"=>mysql_real_escape_string($zhdes),
+                         "twdescription"=>mysql_real_escape_string($twdes));
+            if($id > 0){
+                $websiteModel->updateWebsite($id,$strar);
+            }else{
+                $websiteModel->addWebsite($strar);
+            }
+            $this->redirect("/admin/siteinfo");
+            return TRUE;
+
+        }else{
+            $websiteone=null;
+            if($id)
+                $websiteone=$websiteModel->getWebsiteone($id);
+
+            $lists=$websiteModel->getWebsiteList(1,10);
+            $this->_setViewData(array("lists"=>$lists,"websiteone"=>$websiteone,"id"=>$id));
+            $this->getView()->assign($this->viewData);
+        }
+
     }
 
     public function articleuploadAction($aid = 0,$id= 0,$d = 0){

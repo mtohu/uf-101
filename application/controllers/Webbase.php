@@ -19,6 +19,7 @@ class WebbaseController extends Yaf_Controller_Abstract{
   public $viewData  = array();
   public function init(){
       $cdnurl = Yaf_Registry::get("config")->get("cdnurl");
+      $webhost = Yaf_Registry::get("config")->get("webhost");
       $this->session = Yaf_Registry::get("session");
       $this->basecommon = new Basecommon();
       $this->indexModel = new IndexModel();
@@ -41,13 +42,14 @@ class WebbaseController extends Yaf_Controller_Abstract{
           $this->_userInfo = $userInfo = $this->session->userdata('userInfo');
       }
 
-      $this->_setViewData(array('cdnurl'=>$cdnurl,'pageMethod'=>$this->_pageMethod,'pageProg'=>$this->_pageProg,'exectime'=>time()));
+      $this->_setViewData(array('cdnurl'=>$cdnurl,'pageMethod'=>$this->_pageMethod,
+                          'pageProg'=>$this->_pageProg,'exectime'=>time(),'webhost'=>$webhost));
 
       $this->_modelArrayPicks = array('hotarticles'=>10);
       $this->memSets = array(
-                       "maindex"=>array("hotarticles","channellist"),
-                       "articles"=>array("hotarticles"),
-                       "list"=>array("hotarticles","channellist"),
+                       "maindex"=>array("hotarticles","channellist","website"),
+                       "articles"=>array("hotarticles","website"),
+                       "list"=>array("hotarticles","channellist","website"),
                        "admin"=>array("channellist")
       );
 
@@ -86,6 +88,9 @@ class WebbaseController extends Yaf_Controller_Abstract{
             break;
           case 'hotarticles':
             $data = $this->$modelKey->getArticlesList('zh',"",0,1,10,"a.istop DESC,a.isrec DESC,a.ctime DESC");
+            break;
+          case 'website':
+            $data = $this->$modelKey->getWebsiteList(1,1);
             break;
         }
         $this->multicache->set($key, $data, MEMCACHE_COMPRESSED, 77);

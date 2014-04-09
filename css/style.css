@@ -995,22 +995,40 @@ input#author, input#email, input#url, #comment {
 }
 #commentform p { margin-bottom: 15px }
 /*-[ Page Navigation ]-------------------------*/
-.pagination {
-    float: left;
-    padding-right: 30px;
+.pagination{
+    width:100%;
+    text-align:center;
+    height:30px;
+    clear:both;
+    line-height:30px;
+    margin:10px auto;
 }
-.pagination a {
-    transition: background-color 0.2s;
-    -moz-transition: background-color 0.2s;
-    -ms-transition: background-color 0.2s;
-    -o-transition: background-color 0.2s;
-    -webkit-transition: background-color 0.2s;
+.pagination a{
+    padding:5px 10px;
+    margin:2px;
+    border:#e3e3e3 1px solid;
+    color:#444;
+    *height: 30px;
+    *line-height: 30px;
+    cursor:pointer;
 }
-.pagination ul li {
-    display: inline-block;
-    float: left;
-    margin-right: 10px;
-    text-align: center;
+.pagination a:hover{
+    color:red;
+    text-decoration:none
+}
+.pagination .current{
+    color:red;
+    background:#fff;
+    border:#e3e3e3 1px solid;
+    text-decoration:none;
+    padding:5px 10px;
+    margin:2px;
+}
+.pagination .disabled{
+    padding:5px 10px;
+    margin:2px;
+    border:#e3e3e3 1px solid;
+    color:#444;
 }
 .currenttext, .pagination2 a {
     background-color: #E03F00;

@@ -8,23 +8,70 @@
 <body id="page">
 <h2>站点信息</h2>
 <table width="100%" border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td>ID号</td>
+<td>title</td>
+<td>keyword</td>
+<td>description</td>
+<td>操作</td>
+</tr>
+<!--{foreach from=$lists item=row}-->
+<!--{if $row.id > 0}-->
+<tr>
+<td><!--{$row.id}--></td>
+<td><!--{$row.zhtitle}--></td>
+<td><!--{$row.zhkeyword}--></td>
+<td><!--{$row.zhdescription}--></td>
+<td><a href="/admin/siteinfo/id/<!--{$row.id}-->">编辑</a>|<a href="/admin/siteinfo/id/<!--{$row.id}-->/d/1">删除</a></td></td>
+</tr>
+<!--{/if}-->
+<!--{/foreach}-->
+</table>
+<form action="/admin/siteinfo" method="post" enctype="multipart/form-data" id="siteForm">
+<input type="hidden" name="id" value="<!--{$id}-->">
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
   <tr>
-    <th>站点名称：</th>
-    <td>...</td>
+    <th>英文标题：</th>
+    <td><input type="text" name="entitle" id="entitle" value="<!--{$websiteone.entitle}-->" /></td>
   </tr>
   <tr>
-    <th>文章数量：</th>
-    <td><strong>120000</strong>包含在<strong>37</strong>个分类中</td>
+    <th>简体标题：</th>
+    <td><input type="text" name="zhtitle" id="zhtitle" value="<!--{$websiteone.zhtitle}-->" /></td>
   </tr>
   <tr>
-    <th>今日更新：</th>
-    <td>23篇</td>
+    <th>繁体标题：</th>
+    <td><input type="text" name="twtitle" id="twtitle" value="<!--{$websiteone.twtitle}-->" /></td>
   </tr>
+  <tr>
+     <th>英文 keyword：</th>
+     <td><textarea name="enkeyword" id="enkeyword" style="width:500px;height:60px;"><!--{$websiteone.enkeyword}--></textarea></td>
+  </tr>
+  <tr>
+     <th>简体 keyword：</th>
+     <td><textarea name="zhkeyword" id="zhkeyword" style="width:500px;height:60px;"><!--{$websiteone.zhkeyword}--></textarea></td>
+  </tr>
+   <tr>
+     <th>繁体 keyword：</th>
+     <td><textarea name="twkeyword" id="twkeyword" style="width:500px;height:60px;"><!--{$websiteone.twkeyword}--></textarea></td>
+  </tr>
+ <tr>
+    <th>英文 description：</th>
+    <td><textarea name="endescription" id="endescription" style="width:500px;height:60px;"><!--{$websiteone.endescription}--></textarea></td>
+  </tr>
+  <tr>
+     <th>简体 description：</th>
+     <td><textarea name="zhdescription" id="zhdescription" style="width:500px;height:60px;"><!--{$websiteone.zhdescription}--></textarea></td>
+  </tr>
+   <tr>
+      <th>繁体 description：</th>
+      <td><textarea name="twdescription" id="twdescription" style="width:500px;height:60px;"><!--{$websiteone.twdescription}--></textarea></td>
+  </tr>
+
   <tr>
     <th>&nbsp;</th>
-    <td><input type="text" name="textfield" />
-    <input name="Submit" type="button" class="bt" value="按钮" /></td>
+    <td><input name="btnsub" type="submit" class="bt" value="确定" /></td>
   </tr>
 </table>
+</form>
 </body>
 </html>

@@ -58,7 +58,7 @@ class ArticlesModel extends ModelbaseModel{
         $tablename = $this->getTableAritcleContents($aid);
         $langsql = ' AND a.'.$lang.'_acid = ac.id';
 
-        $sql = sprintf(" SELECT a.*,ac.des,ac.viewnum FROM articles AS a LEFT JOIN %s AS ac
+        $sql = sprintf(" SELECT a.*,ac.des,ac.viewnum,ac.keyword FROM articles AS a LEFT JOIN %s AS ac
                          ON a.id = ac.aid %s WHERE a.closed = 0 AND a.id = %d LIMIT 1",$tablename,$langsql,$aid);
         
         $query = $this->db->query($sql);
@@ -109,7 +109,7 @@ class ArticlesModel extends ModelbaseModel{
         $tablename = $this->getTableAritcleContents($aid);
         $langsql = ' AND a.'.$lang.'_acid = ac.id';
 
-        $sql = sprintf(" SELECT a.*,ac.des,ac.viewnum FROM articles AS a LEFT JOIN %s AS ac
+        $sql = sprintf(" SELECT a.*,ac.des,ac.viewnum,ac.keyword FROM articles AS a LEFT JOIN %s AS ac
                          ON a.id = ac.aid %s WHERE a.closed = 0 AND a.id = %d LIMIT 1",
                          $tablename,$langsql,$aid);
         

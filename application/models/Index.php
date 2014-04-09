@@ -57,6 +57,26 @@ class IndexModel extends ModelbaseModel{
         return $lists;
     }
 
+    public function getWebsiteList($nowpage=1,$limit = 30,$order="id DESC") {
+        $form = ($nowpage-1) * $limit;
+        $form = $form < 0 ? 0 : $form;
+
+        $sql = sprintf(" SELECT * FROM website ");
+
+        if($order)
+            $sql .= sprintf(" ORDER BY %s",$order);
+
+        $sql .= sprintf(" LIMIT %d,%d",$form,$limit);
+
+        $query = $this->db->query($sql);
+        if($this->db->num_rows($query) < 1 )
+            return false;
+
+        $lists = $this->db->fetch_all($sql);
+
+        return $lists;
+    }
+
     public function getUserFormOne($uid = 0){
         if(!$uid)
             return false;
