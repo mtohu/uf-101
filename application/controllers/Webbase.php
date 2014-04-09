@@ -18,6 +18,7 @@ class WebbaseController extends Yaf_Controller_Abstract{
   public $_modelArrayPicks = array();
   public $viewData  = array();
   public function init(){
+      require_once APPLICATION_PATH.'/language/lang.php';
       $cdnurl = Yaf_Registry::get("config")->get("cdnurl");
       $webhost = Yaf_Registry::get("config")->get("webhost");
       $this->session = Yaf_Registry::get("session");
@@ -42,7 +43,7 @@ class WebbaseController extends Yaf_Controller_Abstract{
           $this->_userInfo = $userInfo = $this->session->userdata('userInfo');
       }
 
-      $this->_setViewData(array('cdnurl'=>$cdnurl,'pageMethod'=>$this->_pageMethod,
+      $this->_setViewData(array('cdnurl'=>$cdnurl,'pageMethod'=>$this->_pageMethod,'langcommon'=>$langcommon,
                           'pageProg'=>$this->_pageProg,'exectime'=>time(),'webhost'=>$webhost));
 
       $this->_modelArrayPicks = array('hotarticles'=>10);
