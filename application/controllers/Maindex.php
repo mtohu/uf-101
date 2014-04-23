@@ -56,4 +56,15 @@ class MaindexController extends WebbaseController {
                            'hotarticles'=>$hotarticles));
         $this->getView()->assign($this->viewData);
     }
+
+
+   public function resetmemcachedAction($key = null){
+
+        $this->_resetMemCached = true;
+        $this->resetMem($key);
+        echo 1;
+        exit;
+        
+   }
+
 }

@@ -10,6 +10,7 @@ class WebbaseController extends Yaf_Controller_Abstract{
   public $basecommon = null;
   public $session = null;
 
+  public $_resetMemCached=false;
   public $_langset = "zh";
   public $multicache = null;
   public $memSets = null;
