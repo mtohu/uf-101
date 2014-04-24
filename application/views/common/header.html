@@ -1,5 +1,5 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" xmlns:og="http://ogp.me/ns#" xmlns:fb="http://www.facebook.com/2008/fbml">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:og="http://ogp.me/ns#" xmlns:fb="http://www.facebook.com/2008/fbml" xmlns:wb=“http://open.weibo.com/wb”>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <!--{if $pageProg=='articles' && $pageMethod=='index'}-->
@@ -39,6 +39,7 @@ h1,h2,h3,h4,h5,h6, .total-comments, #header_area { font-family: 'Oswald', sans-s
 body {font-family: 'Droid Serif', sans-serif;}
 </style>
 <script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
+<script src="http://tjs.sjs.sinajs.cn/open/api/js/wb.js" type="text/javascript" charset="utf-8"></script>
 
 <style type="text/css">
 body {background-color:#F0F2F3;}
@@ -53,7 +54,21 @@ body {background-image:url(/images/pattern36.png);}
 #content { float: left; border-left: 0; border-right: 1px solid #E8E8E8; }
 </style>
 
+<!--{if $pageProg=='articles' && $pageMethod=='index'}-->
+<link rel="canonical" href="http://<!--{$webhost}-->/<!--{$articleone.id}-->-<!--{$articleone.link}-->-<!--{$langset}-->" />
+<meta name="tb:canonical" content="http://<!--{$webhost}-->/article">
+<meta property="og:title" content="<!--{$articleone.vtitle}-->"/>
+<meta property="og:type" content="article" />
+<meta property="og:url" content="http://<!--{$webhost}-->/articles/<!--{$articleone.id}-->-<!--{$articleone.link}-->-<!--{$langset}-->/" />
+<meta property="og:image" content="http://<!--{$cdnurl}-->/<!--{$articleone.picdir}-->/<!--{$articleone.picname}-->_290X290.<!--{$articleone.ext}-->"/>
+<meta property="og:site_name" content="UF101"/>
+<meta property="fb:app_id" content="287711798061160"/>
+<meta property="og:description" content="<!--{$articleone.vsummary|truncate:55:'...':true}-->" />
+<meta property="og:locale" content="zh_CN" />
+
+<!--{else}-->
 <link rel="canonical" href="http://<!--{$webhost}-->" />
+<!--{/if}-->
 </head>
 <body>
 <script>

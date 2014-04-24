@@ -13,7 +13,13 @@
 						<p class="themeta">
 							<span class="thetime">March <!--{$articleone.viewnum|number_format:0:".":","}--></span>
 							<span class="thecategories"><a href="/category/<!--{$articleone.encatename}-->/" title="View all posts in <!--{$articleone.encatename}-->" rel="nofollow"><!--{$articleone.vcatename}--></a></span>
-								<div><div class="fb-share-button" data-href="http://www.viralnova.com/builds-house-under-stairs/" data-width="75" data-type="button"></div></div>						</p>
+						    <div>
+                                                     <wb:share-button addition="number" type="button" language="zh_cn"></wb:share-button>
+                                                     <g:plus action="share" annotation="bubble" size="tall"></g:plus>
+                                                     <div class="fb-like fbook-like" data-href="http://<!--{$webhost}-->/articles/<!--{$articleone.id}-->-<!--{$articleone.link}-->-<!--{$langset}-->/"  data-send="false" data-layout="button_count" data-width="75" data-show-faces="false"></div>
+                                                     <a href="https://twitter.com/share" class="twitter-share-button"></a>
+                                                     </div>
+                                                 </p>
 					</div>
 									</div><!--.headline_area-->
 
