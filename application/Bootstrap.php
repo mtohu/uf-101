@@ -33,17 +33,29 @@ class Bootstrap extends Yaf_Bootstrap_Abstract{
 	public function _initRoute(Yaf_Dispatcher $dispatcher) {
 		//在这里注册自己的路由协议,默认使用简单路由
                 $router = $dispatcher->getRouter();
-                /*$router->addRoute('dummy', new Yaf_Route_Rewrite("/list/:id/:name",array(
+                /*$router->addRoute('dummy', new Yaf_Route_Rewrite("/page/:page",array(
                                   "controller" => "maindex",
-                                  "action"     => "list",))
-                );*/ 
+                                  "action"     => "index",))
+                );*/
                 /*$router->addRoute('rewrite', new Yaf_Route_Rewrite("/admin/categorylist/:cid",array(
                                   "controller" => "admin",
                                   "action"     => "categorylist",))
                 );*/
-                $router->addRoute('regex', new Yaf_Route_Regex("#^/list/([0-9]+)/([^/]*)#",
-                                  array("controller" => "maindex","action" => "list"),
-                                  array(1=>"id",2=>"name"))
+                $router->addRoute('regex1', new Yaf_Route_Regex("#^/page/([0-9]+)#",
+                                  array("controller" => "maindex","action" => "index"),
+                                  array(1=>"page"))
+                ); 
+                $router->addRoute('regex2', new Yaf_Route_Regex("#^/category/([a-z]+)#",
+                                  array("controller" => "list","action" => "index"),
+                                  array(1=>"catename",2=>"page"))
+                ); 
+                $router->addRoute('regex3', new Yaf_Route_Regex("#^/category/([a-z]+)/([0-9]+)#",
+                                  array("controller" => "list","action" => "index"),
+                                  array(1=>"catename",2=>"page"))
+                ); 
+                $router->addRoute('regex4', new Yaf_Route_Regex("#^/articles/([0-9a-z_-]+)#",
+                                  array("controller" => "articles","action" => "index"),
+                                  array(1=>"link"))
                 ); 
 	}
 

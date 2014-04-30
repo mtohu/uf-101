@@ -21,6 +21,7 @@ class AdminController extends WebbaseController {
         $title = urldecode($title);
         if(!$title){
             $title = "";
+            $stitle = "0";
         }
         $articleModel = new ArticlesModel();
         /*$channellist = $this->viewData["channellist"];
@@ -28,12 +29,12 @@ class AdminController extends WebbaseController {
         foreach($channellist as $k => $v){
             $ctotal = $ctotal + $v["total"]; 
         }*/
-        $where = " AND (a.entitle LIKE '%".$title."%' OR a.zhtitle LIKE '%".$title."%')";
+        $where = " AND (a.entitle LIKE '%".$title."%' OR a.zhtitle LIKE '%".$title."%' OR a.twtitle LIKE'%".$title."%')";
         $ctotal=$articleModel->getArticlesCount("zh",$where,-1);
         $lists = null;
         if($ctotal){
             $lists = $articleModel->getArticlesList("zh",$where,-1,$page,15);
-            $PAGESTR = $this->page->getPaginationString($page,$ctotal, 15, 1, "/", "admin/articlelist/cid/$cid/title/$title/page/");
+            $PAGESTR = $this->page->getPaginationString($page,$ctotal, 15, 1, "/", "admin/articlelist/cid/$cid/title/$stitle/page/");
             $this->_setViewData(array('PAGESTR'=>$PAGESTR));
         }
         $this->_setViewData(array('lists'=>$lists,"cid"=>$cid));
