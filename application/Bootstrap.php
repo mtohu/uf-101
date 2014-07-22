@@ -49,7 +49,7 @@ class Bootstrap extends Yaf_Bootstrap_Abstract{
                                   array("controller" => "list","action" => "index"),
                                   array(1=>"catename",2=>"page"))
                 ); 
-                $router->addRoute('regex3', new Yaf_Route_Regex("#^/category/([a-z]+)/([0-9]+)#",
+                $router->addRoute('regex3', new Yaf_Route_Regex("#^/category/([a-z]+)/page/([0-9]+)#",
                                   array("controller" => "list","action" => "index"),
                                   array(1=>"catename",2=>"page"))
                 ); 

@@ -28,7 +28,7 @@ class ListController extends WebbaseController {
         $lists = null;
         if($ctotal){
             $lists = $this->indexModel->getArticlesList("zh"," AND a.cateid=".$cateid,0,$page,10);
-            $PAGESTR = $this->page->getPaginationString($page,$ctotal, 10, 1, "/", "/category/page/");
+            $PAGESTR = $this->page->getPaginationString($page,$ctotal, 10, 1, "/", "category/".$catename."/page/");
             $this->_setViewData(array('PAGESTR'=>$PAGESTR));
         }
         $this->_setViewData(array('lists'=>$lists,'catename'=>$encatename,
